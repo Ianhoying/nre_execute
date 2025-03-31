@@ -1,32 +1,37 @@
 import streamlit as st
-import subprocess
-import os
+import pandas as pd
+from crawler_p1 import execute, code  # 크롤링 관련 모듈 가져오기
 
-# if not os.path.exists("크롤링"):
-#     os.system("git clone https://github.com/ianhoying/realEstate_crawler.git 크롤링")
-
-# import sys
-# sys.path.append("크롤링")
-# from crawler_p1 import execute  # 크롤링 코드 불러오기
-
-# # 크롤링 실행
-# data = execute()
+def run_crawler():
+    st.write("🏡 **부동산 크롤러 실행 중...**")
+    
+    total = pd.DataFrame()
+    raw = pd.DataFrame()
+    
+    for gu_info in code:
+        t, r = execute(gu_info)
+        total = pd.concat([total, t], ignore_index=True)
+        raw = pd.concat([raw, r], ignore_index=True)
+    
+    return total, raw
 
 # Streamlit UI 구성
-st.title("🚀 부동산 크롤링 실행")
-st.write("GitHub에서 최신 크롤링 코드를 가져와 실행합니다.")
+st.title("🏠 부동산 크롤러 대시보드")
 
-if st.button("크롤링 실행하기"):
-    st.write("✅ GitHub에서 최신 코드 가져오는 중...")
+if st.button("크롤링 시작"):
+    total_df, raw_df = run_crawler()
     
-    # GitHub에서 최신 코드 가져오기 (로컬 Git 저장소가 있어야 함)
-    result = subprocess.run(["git", "pull"], capture_output=True, text=True)
-    st.text(result.stdout)
+    st.write("### 📊 수집된 데이터 (Total)")
+    st.dataframe(total_df)
     
-    # 크롤링 코드 실행 (Python 스크립트 실행)
-    st.write("🛠 크롤링 실행 중...")
-    # result = subprocess.run(["python", "crawl.py"], capture_output=True, text=True)
+    st.write("### 📝 원본 데이터 (Raw)")
+    st.dataframe(raw_df)
     
-#     # 실행 결과 출력
-#     st.text(result.stdout)
-#     st.write("🎉 크롤링 완료!")
+    # CSV 파일 다운로드 기능
+    # csv = total_df.to_csv(index=False).encode('utf-8-sig')
+    # st.download_button(
+    #     label="📥 Total 데이터 다운로드",
+    #     data=csv,
+    #     file_name="total_data.csv",
+    #     mime="text/csv",
+    # )
