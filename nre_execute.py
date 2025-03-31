@@ -13,9 +13,9 @@ if st.button("크롤링 실행하기"):
     result = subprocess.run(["git", "pull"], capture_output=True, text=True)
     st.text(result.stdout)
     
-#     # 크롤링 코드 실행 (Python 스크립트 실행)
-#     st.write("🛠 크롤링 실행 중...")
-#     result = subprocess.run(["python", "crawl.py"], capture_output=True, text=True)
+    # 크롤링 코드 실행 (Python 스크립트 실행)
+    st.write("🛠 크롤링 실행 중...")
+    # result = subprocess.run(["python", "crawl.py"], capture_output=True, text=True)
     
 #     # 실행 결과 출력
 #     st.text(result.stdout)
