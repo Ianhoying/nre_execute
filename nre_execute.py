@@ -1,5 +1,9 @@
 import streamlit as st
 import pandas as pd
+import sys
+
+sys.path.append("realEstate_crawler")
+
 from crawler_p1 import execute, code  # 크롤링 관련 모듈 가져오기
 
 def run_crawler():
