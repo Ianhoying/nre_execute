@@ -2,6 +2,19 @@ import streamlit as st
 import subprocess
 import os
 
+if not os.path.exists("크롤링"):
+    os.system("git clone https://github.com/ianhoying/realEstate_crawler.git 크롤링")
+
+import sys
+sys.path.append("크롤링")
+from crawler_p1 import crawl_function  # 크롤링 코드 불러오기
+
+
+from crawler import crawl_function  # 크롤링 코드 불러오기
+
+# 크롤링 실행
+data = crawl_function()
+
 # Streamlit UI 구성
 st.title("🚀 부동산 크롤링 실행")
 st.write("GitHub에서 최신 크롤링 코드를 가져와 실행합니다.")
