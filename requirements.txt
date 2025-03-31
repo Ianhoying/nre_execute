@@ -1,1 +1,2 @@
 streamlit
+git+https://github.com/ianhoying/realEstate_crawler.git
